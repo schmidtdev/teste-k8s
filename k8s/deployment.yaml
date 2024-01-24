@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: teste-prod
+spec:
+  replicas: 2
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: teste-prod
+  template:
+    metadata:
+      labels:
+        app: teste-prod
+    spec:
+      containers:
+        - name: teste-prod
+          image: nginx
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+      restartPolicy: Always
